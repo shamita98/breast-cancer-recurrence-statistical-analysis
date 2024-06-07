@@ -4,6 +4,7 @@ Exploring Clinical Factors Impacting Breast Cancer Recurrence: A Statistical Ana
 In this project, I explored the impact of clinical characteristics on breast cancer recurrence using a statistical analysis.
 
 Methodology and Brief Explanation of the Results:
+<br>
 <br>**1. Data Preprocessing and Visualization**
 <br>The dataset for this project was obtained from [UCI Machine Learning Repository](https://archive.ics.uci.edu/dataset/14/breast+cancer).
 There are nine predictor variables describing the clinical characteristics of 286 breast cancer patients. The outcome/class variable is breast cancer recurrence.
