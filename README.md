@@ -1,5 +1,6 @@
 # breast-cancer-recurrence-statistical-analysis
-Exploring Clinical Factors Impacting Breast Cancer Recurrence: A Statistical Analysis
+<br>Project Title:
+<br>**Exploring Clinical Factors Impacting Breast Cancer Recurrence: A Statistical Analysis**
 
 In this project, I explored the impact of clinical characteristics on breast cancer recurrence using a statistical analysis.
 
