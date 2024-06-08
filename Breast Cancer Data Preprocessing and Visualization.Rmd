@@ -1,0 +1,123 @@
+---
+title: "Breast Cancer Data Preparation"
+output: html_notebook
+---
+
+#### dataset source: https://archive.ics.uci.edu/dataset/14/breast+cancer
+
+```{r}
+library(tidyverse)
+```
+
+### 1. Data Preprocessing
+```{r}
+# read the file as a dataframe
+breast.data = read.csv("breast-cancer.data", header = FALSE)
+
+```
+
+```{r}
+# View the first and last six rows
+head(breast.data, n=6)
+tail(breast.data, n=6)
+```
+
+```{r}
+# rename the columns
+colnames(breast.data) = c("class", "age", "menopause", "tumor.size",
+                          "inv.nodes", "node.caps","deg.malignancy",
+                          "breast","breast.quad","irradiation")
+head(breast.data)
+```
+
+
+```{r}
+# check for missing values which are denoted by "?" in node-caps and breast-quad
+head(breast.data[c(breast.data$node.caps == "?"|breast.data$breast.quad =="?"),])
+```
+```{r}
+# check the count of observations with missing values
+nrow(breast.data[c(breast.data$node.caps == "?"|breast.data$breast.quad == "?"),])
+```
+```{r}
+# replace "?" to NA
+new_breast_data = replace(breast.data,breast.data == "?",NA)
+sum(is.na(new_breast_data))
+```
+```{r}
+# remove rows with missing values
+new_breast_data = na.omit(new_breast_data)
+```
+
+```{r}
+# save it as a new csv file
+write.csv(new_breast_data,"breast_cancer_new.csv")
+```
+
+### 2. Data Visualization
+
+```{r}
+# factorize and relevel values of some variables
+new_breast_data$class = factor(new_breast_data$class)
+new_breast_data$menopause = factor(new_breast_data$menopause)
+new_breast_data$node.caps = factor(new_breast_data$node.caps)
+new_breast_data$breast = factor(new_breast_data$breast)
+new_breast_data$breast.quad = factor(new_breast_data$breast.quad)
+new_breast_data$irradiation = factor(new_breast_data$irradiation)
+new_breast_data$age = factor(new_breast_data$age, 
+                         levels = c("20-29", "30-39" ,"40-49","50-59" ,"60-69",
+                                    "70-79"))
+new_breast_data$inv.nodes = factor(new_breast_data$inv.nodes, 
+                         levels = c("0-2", "3-5" ,"6-8","9-11" ,"12-14",
+                                    "15-17","24-26"))
+new_breast_data$deg.malignancy = factor(new_breast_data$deg.malignancy,
+                                    levels = c("1","2","3"))
+new_breast_data$tumor.size = factor(new_breast_data$tumor.size,
+                                           levels = c("0-4","5-9", "10-14","15-19", "20-24","25-29" ,"30-34" ,"35-39" ,"40-44" ,"45-49","50-54" ))
+```
+
+```{r}
+summary(new_breast_data)
+```
+
+```{r}
+# create a variable to store column names of the dataset
+variables = colnames(new_breast_data)
+variables
+```
+
+```{r}
+# create a function to make stacked barplot of breast cancer recurrence by each variable
+stacked_barplot = function(dataset, x, fill, x_axis_name, legend_label)
+  {imj = ggplot(dataset, aes(x = x, fill = fill)) + 
+          geom_bar(color = "#6A51A3") +
+          scale_fill_manual(values = c("#DADAEB", "#9E9AC8"))+
+          labs(x = x_axis_name, fill = legend_label) +
+          theme(axis.line = element_line(colour="black", 
+                                         size=0.5, linetype="solid"),
+              plot.title = element_text(face="bold", color="black", 
+                                        size=13, hjust=0.6, vjust=+1),
+              axis.text.x = element_text(color="black", size=10),
+              axis.text.y = element_text(color="black", size=10),
+              axis.title.x = element_text(face="bold", color="black", 
+                                          size=12, ,hjust=0.5, vjust=-3, 
+                                          margin=margin(t=0,r=0,b=10,l=0)),
+              axis.title.y = element_text(face="bold", color="black", 
+                                          size=12, vjust=+3, hjust=0.5,
+                                          margin=margin(t=0,r=0,b=0,l=10)),
+              legend.title = element_text(size=10,face='bold', color='black'),
+              legend.text = element_text(size=10, color='black'))
+  
+  return (imj)
+  }
+```
+
+```{r}
+# create a stacked barplot for breast cancer recurrence by each predictor variable
+for (i in 2:length(variables))
+{
+  imj = stacked_barplot(new_breast_data,new_breast_data[[i]],new_breast_data[[1]],
+                        variables[i], variables[1])
+  print(imj)
+}
+```
