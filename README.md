@@ -2,7 +2,7 @@
 <br>Project Title:
 <br>**Exploring Clinical Factors Impacting Breast Cancer Recurrence: A Statistical Analysis**
 
-In this project, I perform a statistical analysis to explore the impact of clinical characteristics on breast cancer recurrence. The analysis was performed in R using RStudio software.
+This project explores the impact of clinical characteristics on breast cancer recurrence through a statistical analysis. The analysis was performed in R using RStudio software.
 
 **Dataset Files**
 <br>1. [Breast Cancer Data](https://github.com/shamita98/breast-cancer-recurrence-statistical-analysis/blob/e9eb575b9760d659ace201c52b050f1c4f896a35/breast-cancer.data)
